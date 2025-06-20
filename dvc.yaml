@@ -1,0 +1,158 @@
+stages:
+  spider-mawilabv1_1:
+    cmd: uv run python -m mawilab_data.scraper mawilabv1.1
+    deps:
+    - .python-version
+    - pyproject.toml
+    - src/mawilab_data/scraper
+    - uv.lock
+    outs:
+    - data/raw/mawilabv1.1_spider.yaml:
+        persist: true
+    frozen: true
+  generate-annotations:
+    foreach: ${recordings}
+    do:
+      cmd: uv run python -m mawilab_data.annotations ./data/raw/${item} ./data/processed/${item}
+      deps:
+      - .python-version
+      - pyproject.toml
+      - src/mawilab_data/annotations
+      - uv.lock
+#     - ./data/raw/${item}
+      outs:
+      - ./data/processed/${item}/annotations.parquet
+  generate-flows:
+    foreach: ${recordings}
+    do:
+      cmd: PCAP=$(find ./data/raw/${item} \( -name '*.pcap.gz' -or -name '*.dump.gz'
+        \) -print -quit) && gunzip -c $PCAP > /tmp/pcap && TEMP_DIR=$(uv run python
+        -c 'from tempfile import mkdtemp; print(mkdtemp())') && uv run pcap-filter
+        --pcap /tmp/pcap --annotations ./data/processed/${item}/annotations.parquet
+        --output $TEMP_DIR --store-packet-metadata ./data/processed/${item} && rm
+        /tmp/pcap && mkdir -p ./data/cicflowmeter/${item} && podman run --rm -v $TEMP_DIR:/pcap:Z
+        -v ./data/cicflowmeter/${item}:/output:Z --entrypoint java ghcr.io/thelurps/cicflowmeter:v3.0.4
+        -Djava.library.path=/app/jnetpcap/  -Xms8G -Xmx240G -cp target/CICFlowMeterV3-0.0.4-SNAPSHOT.jar
+        cic.cs.unb.ca.ifm.Cmd /pcap /output && rm -rf $TEMP_DIR && for file in ./data/cicflowmeter/${item}/*.pcap_Flow.csv;
+        do sed -i "s/NeedManualLabel/$(basename "$file" | sed -E 's/([a-zA-Z]+)_[a-zA-Z0-9]+\.pcap_Flow\.csv/\1/')/g"
+        "$file"; done
+      deps:
+      - ./data/processed/${item}/annotations.parquet
+      - ./data/raw/${item}
+      - .python-version
+      - pyproject.toml
+      - uv.lock
+      outs:
+      - ./data/cicflowmeter/${item}
+      - ./data/processed/${item}/packet_metadata.parquet
+  combine-flows:
+    foreach: ${recordings}
+    do:
+      cmd: uv run python -m mawilab_data.cicflowmeter --input data/cicflowmeter/${item}
+        --annotations data/processed/${item}/annotations.parquet --output data/processed/${item}
+      deps:
+      - .python-version
+      - data/cicflowmeter/${item}
+      - data/processed/${item}/annotations.parquet
+      - pyproject.toml
+      - src/mawilab_data/cicflowmeter
+      - src/mawilab_data/schema
+      - uv.lock
+      outs:
+      - data/processed/${item}/cicflowmeter_flows.parquet
+  sample-2011-01-01-n10_000:
+    cmd: uv run python -m mawilab_data.sampler -n 10000 --start-date 2011-01-01 --end-date
+      2011-01-02 -o data/processed/v1.1/cicflowmeter_sample_2011-01-01_n10_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2011/month=01/day=01
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2011-01-01_n10_000.parquet
+  sample-2021-01-03-n10_000:
+    cmd: uv run python -m mawilab_data.sampler -n 10000 --start-date 2021-01-03 --end-date
+      2021-01-04 -o data/processed/v1.1/cicflowmeter_sample_2021-01-03_n10_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2021/month=01/day=03
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2021-01-03_n10_000.parquet
+  sample-2011-01-n3_000_000:
+    cmd: uv run python -m mawilab_data.sampler -n 3000000 --start-date 2011-01-01 --end-date
+      2011-01-31 -o data/processed/v1.1/cicflowmeter_sample_2011-01_n3_000_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2011/month=01
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2011-01_n3_000_000.parquet
+  sample-2016-01-n3_000_000:
+    cmd: uv run python -m mawilab_data.sampler -n 3000000 --start-date 2016-01-01 --end-date
+      2016-01-31 -o data/processed/v1.1/cicflowmeter_sample_2016-01_n3_000_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2016/month=01
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2016-01_n3_000_000.parquet
+  sample-2021-01-n3_000_000:
+    cmd: uv run python -m mawilab_data.sampler -n 3000000 --start-date 2021-01-01 --end-date
+      2021-01-31 -o data/processed/v1.1/cicflowmeter_sample_2021-01_n3_000_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2021/month=01
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2021-01_n3_000_000.parquet
+  sample-2011-n3_000_000:
+    cmd: uv run python -m mawilab_data.sampler -n 3000000 --start-date 2011-01-01 --end-date
+      2011-12-31 -o data/processed/v1.1/cicflowmeter_sample_2011_n3_000_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2011
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2011_n3_000_000.parquet
+  sample-2016-n3_000_000:
+    cmd: uv run python -m mawilab_data.sampler -n 3000000 --start-date 2016-01-01 --end-date
+      2016-12-31 -o data/processed/v1.1/cicflowmeter_sample_2016_n3_000_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2016
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2016_n3_000_000.parquet
+  sample-2021-n3_000_000:
+    cmd: uv run python -m mawilab_data.sampler -n 3000000 --start-date 2021-01-01 --end-date
+      2021-12-31 -o data/processed/v1.1/cicflowmeter_sample_2021_n3_000_000.parquet
+    deps:
+    - .python-version
+    - data/processed/v1.1/year=2021
+    - pyproject.toml
+    - src/mawilab_data/sampler
+    - src/mawilab_data/schema
+    - uv.lock
+    outs:
+    - data/processed/v1.1/cicflowmeter_sample_2021_n3_000_000.parquet

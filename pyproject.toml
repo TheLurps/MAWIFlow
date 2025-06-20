@@ -1,0 +1,58 @@
+[project]
+name = "mawilab-data"
+version = "0.1.0"
+description = "Python library for processing MAWILab dataset"
+readme = "README.md"
+authors = [
+    { name = "Joshua Schraven", email = "joshua.schraven@hsu-hh.de" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb>=1.2.1",
+    "lxml>=5.3.1",
+    "pcap-filter>=0.1.0",
+    "pyarrow>=19.0.1",
+    "pyyaml>=6.0.2",
+]
+default-optional-dependency = "cpu-lts"
+
+[project.optional-dependencies]
+scraper = [
+    "scrapy>=2.12.0",
+]
+cpu = [
+    "polars>=1.25.2",
+]
+cpu-lts = [
+    "polars-lts-cpu>=1.28.1",
+]
+gpu = [
+    "polars[gpu]>=1.25.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+    "pyright>=1.1.398",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.0",
+    "ruff>=0.11.3",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py312"
+
+[tool.uv.sources]
+pcap-filter = { index = "pcap-filter" }
+
+[[tool.uv.index]]
+url = "https://pypi.nvidia.com/"
+
+[[tool.uv.index]]
+name = "pcap-filter"
+url = "https://imb-git.hsu-hh.de/api/v4/projects/556/packages/pypi/simple"

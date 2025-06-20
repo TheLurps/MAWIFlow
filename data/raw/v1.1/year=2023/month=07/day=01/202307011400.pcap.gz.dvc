@@ -1,0 +1,10 @@
+md5: d70b2f1c2154cb88444b4710787e2cd4
+frozen: true
+deps:
+- checksum: '"b7bcd449-5ff6d2f401acc"'
+  size: 3082605641
+  hash: md5
+  path: http://mawi.wide.ad.jp/mawi/samplepoint-F/2023/202307011400.pcap.gz
+outs:
+- hash: md5
+  path: 202307011400.pcap.gz

@@ -1,0 +1,12 @@
+md5: fd3542652e2f775dd788dd069d35d598
+frozen: true
+deps:
+- checksum: '"1967642118"'
+  size: 17959
+  hash: md5
+  path: http://www.fukuda-lab.org/mawilab/v1.1/2021/07/17/20210717_notice.csv
+outs:
+- hash: md5
+  path: 20210717_notice.csv
+  md5: bc7f45669c8a6d314ae5759d6cd9e5b0
+  size: 17959

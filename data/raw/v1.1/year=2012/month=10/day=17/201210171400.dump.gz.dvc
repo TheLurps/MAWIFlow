@@ -1,0 +1,10 @@
+md5: a6d2d75625040f1522efd924c550e75a
+frozen: true
+deps:
+- checksum: '"324cfa21-4cc45bfc4d440"'
+  size: 843905569
+  hash: md5
+  path: http://mawi.wide.ad.jp/mawi/samplepoint-F/2012/201210171400.dump.gz
+outs:
+- hash: md5
+  path: 201210171400.dump.gz

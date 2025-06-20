@@ -1,0 +1,13 @@
+md5: 3126a506e93359470b14c7475f327df2
+frozen: true
+deps:
+- checksum: '"1721058082"'
+  size: 12494
+  hash: md5
+  path: 
+    http://www.fukuda-lab.org/mawilab/v1.1/2011/03/12/20110312_anomalous_suspicious.csv
+outs:
+- hash: md5
+  path: 20110312_anomalous_suspicious.csv
+  md5: 257c7c79a4784510c01dd162b67b6a91
+  size: 12494

@@ -1,0 +1,18 @@
+flowchart TD
+        A(["Start"])
+        A --> B["URL scraper"]
+        B --> C["DVC repository"]
+        C --> D["download raw data"]
+        subgraph "for each day of raw data"
+            D --> F["read .xml/.csv annotations"]
+            F --> G["combine annotations"]
+            G --> X@{ shape: doc, label: "annotations.parquet" }
+            G --> H["split pcap file"]
+            H --> Y@{ shape: doc, label: "packet_metadata.parquet" }
+            H --> I["convert pcaps with CICFlowMeter"]
+            I --> J["fix labels"]
+            J --> K["combine flows"]
+            K --> Z@{ shape: doc, label: "cicflowmeter_flows.parquet" }
+        end
+        K --> L["sample from flows"]
+        L --> W@{ shape: doc, label: "sample.parquet" }
