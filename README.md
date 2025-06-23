@@ -2,6 +2,23 @@
 
 Realistic Flow-Based Evaluation for Network Intrusion Detection based on [MAWILab v1.1](http://www.fukuda-lab.org/mawilab/v1.1)
 
+Preprint: [MAWIFlow Benchmark: Realistic Flow-Based Evaluation for Network Intrusion Detection](https://arxiv.org/abs/2506.17041)
+> Benchmark datasets for network intrusion detection commonly rely on synthetically generated traffic, which fails to reflect the statistical variability and temporal drift encountered in operational environments. This paper introduces MAWIFlow, a flow-based benchmark derived from the MAWILAB v1.1 dataset, designed to enable realistic and reproducible evaluation of anomaly detection methods. A reproducible preprocessing pipeline is presented that transforms raw packet captures into flow representations conforming to the CICFlowMeter format, while preserving MAWILab's original anomaly labels. The resulting datasets comprise temporally distinct samples from January 2011, 2016, and 2021, drawn from trans-Pacific backbone traffic.
+>
+> To establish reference baselines, traditional machine learning methods, including Decision Trees, Random Forests, XGBoost, and Logistic Regression, are compared to a deep learning model based on a CNN-BiLSTM architecture. Empirical results demonstrate that tree-based classifiers perform well on temporally static data but experience significant performance degradation over time. In contrast, the CNN-BiLSTM model maintains better performance, thus showing improved generalization. These findings underscore the limitations of synthetic benchmarks and static models, and motivate the adoption of realistic datasets with explicit temporal structure. All datasets, pipeline code, and model implementations are made publicly available to foster transparency and reproducibility.
+
+```
+@misc{schraven2025mawiflowbenchmarkrealisticflowbased,
+    title={MAWIFlow Benchmark: Realistic Flow-Based Evaluation for Network Intrusion Detection},
+    author={Joshua Schraven and Alexander Windmann and Oliver Niggemann},
+    year={2025},
+    eprint={2506.17041},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG},
+    url={https://arxiv.org/abs/2506.17041},
+}
+```
+
 ## Dependencies
 
 - [dvc](https://dvc.org) - Data Version Control for AI projects
