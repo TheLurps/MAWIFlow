@@ -1,4 +1,4 @@
-md5: 60f433adc61126ab7a8a4686f0fc7ae9
+md5: 0b7fe3be1349c939d0ae6d6d0ca39849
 frozen: true
 deps:
 - checksum: '"2cea60ae-46dbd849d7200"'
@@ -8,3 +8,5 @@ deps:
 outs:
 - hash: md5
   path: 200907021400.dump.gz
+  md5: 9474d04dbe7d7fbe926f0945bfbd4b6b
+  size: 753557678

@@ -1,4 +1,4 @@
-md5: b9d993f35505d4adf2d64245fb5d941f
+md5: 70e259d295e5ff9c25b67543aa90228a
 frozen: true
 deps:
 - checksum: '"5a2829ec-57b7d6ebe5e33"'
@@ -8,3 +8,5 @@ deps:
 outs:
 - hash: md5
   path: 201811251400.pcap.gz
+  md5: 5491b8f8d07c3057b4c8e676baace4d1
+  size: 1512581612
