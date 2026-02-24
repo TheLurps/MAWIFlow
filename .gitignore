@@ -4,5 +4,9 @@
 *.parquet
 *.pcap
 *.pyc
+.ipynb_checkpoints/
 __pycache__/
+cicflowmeter.sif
 figures/
+logs/
+results/

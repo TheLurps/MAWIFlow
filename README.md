@@ -2,22 +2,9 @@
 
 Realistic Flow-Based Evaluation for Network Intrusion Detection based on [MAWILab v1.1](http://www.fukuda-lab.org/mawilab/v1.1)
 
-Preprint: [MAWIFlow Benchmark: Realistic Flow-Based Evaluation for Network Intrusion Detection](https://arxiv.org/abs/2506.17041)
-> Benchmark datasets for network intrusion detection commonly rely on synthetically generated traffic, which fails to reflect the statistical variability and temporal drift encountered in operational environments. This paper introduces MAWIFlow, a flow-based benchmark derived from the MAWILAB v1.1 dataset, designed to enable realistic and reproducible evaluation of anomaly detection methods. A reproducible preprocessing pipeline is presented that transforms raw packet captures into flow representations conforming to the CICFlowMeter format, while preserving MAWILab's original anomaly labels. The resulting datasets comprise temporally distinct samples from January 2011, 2016, and 2021, drawn from trans-Pacific backbone traffic.
->
-> To establish reference baselines, traditional machine learning methods, including Decision Trees, Random Forests, XGBoost, and Logistic Regression, are compared to a deep learning model based on a CNN-BiLSTM architecture. Empirical results demonstrate that tree-based classifiers perform well on temporally static data but experience significant performance degradation over time. In contrast, the CNN-BiLSTM model maintains better performance, thus showing improved generalization. These findings underscore the limitations of synthetic benchmarks and static models, and motivate the adoption of realistic datasets with explicit temporal structure. All datasets, pipeline code, and model implementations are made publicly available to foster transparency and reproducibility.
+Schraven, J.; Windmann, A. and Niggemann, O. (2026). MAWIFlow Benchmark: Realistic Flow-Based Evaluation for Network Intrusion Detection.  In Proceedings of the 12th International Conference on Information Systems Security and Privacy - Volume 1, ISBN 978-989-758-800-6, ISSN 2184-4356, pages 549-556.
 
-```
-@misc{schraven2025mawiflowbenchmarkrealisticflowbased,
-    title={MAWIFlow Benchmark: Realistic Flow-Based Evaluation for Network Intrusion Detection},
-    author={Joshua Schraven and Alexander Windmann and Oliver Niggemann},
-    year={2025},
-    eprint={2506.17041},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG},
-    url={https://arxiv.org/abs/2506.17041},
-}
-```
+> **Abstract**: Flow-based Network Intrusion Detection Systems (NIDS) are typically evaluated on synthetic or short-lived benchmarks that emphasize snapshot accuracy and neglect temporal robustness. Recent studies have shown that widely used datasets such as CIC-IDS2017 contain design flaws and artifacts, casting doubt on near-perfect headline scores. In contrast, operational NIDS must cope with long-term changes in traffic, attack patterns, and annotation quality. This position paper introduces MAWIFlow, a benchmark that derives labeled flows from MAWILab v1.1 over multiple years and preserves its anomaly semantics. We construct a scalable preprocessing pipeline, define strictly time-respecting training and test splits, and instantiate representative tabular baselines and a CNN-BiLSTM model. Long-horizon robustness is quantified via a horizon-limited normalized Area Under Time (nAUT) metric adapted from concept-drift-aware evaluation. Experiments on MAWILab flows from 2007–2024 show that all models suffer substantial performance decay on future years, with 2–3 year training windows offering the best trade-off between initial accuracy and long-term robustness. Code and sampled benchmark subsets are publicly available.
 
 ## Dependencies
 
