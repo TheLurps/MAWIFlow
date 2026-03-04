@@ -12,7 +12,7 @@ Schraven, J.; Windmann, A. and Niggemann, O. (2026). MAWIFlow Benchmark: Realist
 - [uv](https://docs.astral.sh/uv) - An extremely fast Python package and project manager, written in Rust.
 - [podman](https://podman.io) - The best free & open source container tools
 - [pcap-filter](https://github.com/TheLurps/pcap-filter) - Python package for filtering a pcap file into multiples using annotations
-- [CICFlowMeter](https://github.com/TheLurps/CICFlowMeter) - fork of [CICFlowMeter-v4.0](https://github.com/ahlashkari/CICFlowMeter) but containerized
+- [CICFlowMeter](https://github.com/GintsEngelen/CICFlowMeter)
 
 ## Usage
 
